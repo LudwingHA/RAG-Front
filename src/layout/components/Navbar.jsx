@@ -24,7 +24,7 @@ export const Navbar = () => {
           <div className="hidden md:flex gap-8 text-sm font-medium">
 
             <Link 
-              to="/chat" 
+              to="/" 
               className="flex items-center gap-2 hover:text-[var(--color-secondary)] transition duration-300"
             >
               <FaComments />

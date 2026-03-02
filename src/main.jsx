@@ -3,8 +3,11 @@ import {createRoot} from 'react-dom/client'
 import './assets/styles/main.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router/RouterConfig'
+import { AuthProvider } from './context/AuthContext'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <RouterProvider router={router}></RouterProvider>
+   <AuthProvider>
+    <RouterProvider router={router}></RouterProvider>
+   </AuthProvider>
   </StrictMode>
 )
