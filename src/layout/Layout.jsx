@@ -7,7 +7,7 @@ export const Layout = ({ children }) => {
       <Navbar>
 
       </Navbar>
-      <main>
+      <main className='pt-5'>
         {children}
       </main>
     </>
