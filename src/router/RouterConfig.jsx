@@ -5,6 +5,7 @@ import { Register } from "../auth/pages/Register";
 import { Login } from "../auth/pages/Login";
 import { DectecPothole } from "../pages/baches/DectecPothole";
 import { HelpPage } from "../pages/help/HelpPage";
+import { Chat } from "../pages/chat/ChatPage";
 
 export const router = createBrowserRouter([
   {path: '/', element: <Home></Home>},
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
   {
     path: '/baches', element: <DectecPothole></DectecPothole>
   },
+  { path: '/chat', element: <Chat></Chat>},
   {
     path: "/ayuda", element: <HelpPage></HelpPage>
   }

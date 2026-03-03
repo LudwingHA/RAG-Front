@@ -1,9 +1,23 @@
-import api from "./axios";
+import axios from "axios";
 
-export const sendMessage = async (query) => {
-  const response = await api.get("/chat", {
-    params: { query }
+const API = axios.create({
+  baseURL: "http://localhost:8000/api",
+});
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export const sendMessage = (query) => {
+  return API.post("/chat", null, {
+    params: { query },
   });
+};
 
-  return response.data;
+export const getHistory = () => {
+  return API.get("/chat/history");
 };
