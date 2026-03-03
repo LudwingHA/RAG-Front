@@ -31,10 +31,7 @@ export const Login = () => {
 
     try {
       setLoading(true);
-
       const data = await loginUser(form);
-
-      // Guardamos JWT en contexto
       login(data.access_token, data.user);
 
       navigate("/");
