@@ -4,9 +4,8 @@ import { Layout } from '../../layout/Layout'
 export const Home = () => {
   return (
     <Layout>
-      <div className='w-4/5 m-auto flex flex-row justify-center gap-2 items-center'>
-      <input className='border w-full p-4 rounded-2xl' type="text" placeholder='Preguntame......' />
-        <button className='bg-[var(--color-primary)] h-full text-amber-50 p-4 rounded-4xl cursor-pointer hover:bg-[var(--color-secondary)]'>Mandar</button></div>
+      <div className='w-3/4 p-20 m-auto font-black text-9xl text-center'>
+      <h1>BIENVENIDO AL SISTEMA DE IA DE LA SICT</h1></div>
     </Layout>
   )
 }

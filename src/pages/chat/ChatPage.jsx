@@ -1,97 +1,156 @@
 import { useState, useEffect, useRef } from "react";
-import { getHistory, sendMessage } from "../../api/chatApi";
+import { FaPaperPlane } from "react-icons/fa";
+import { getConversation, getHistory, sendMessage } from "../../api/chatApi";
+import { ChatLayout } from "./components/ChatLayout";
 import { Layout } from "../../layout/Layout";
 
+export const ChatPage = () => {
 
-export const Chat = () => {
+  const [conversationId, setConversationId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
   const bottomRef = useRef(null);
 
-  useEffect(() => {
-    loadHistory();
-  }, []);
-
-  useEffect(() => {
+  // Scroll automático
+  const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const loadHistory = async () => {
-    const res = await getHistory();
-    setMessages(res.data.messages);
   };
 
-  const handleSend = async () => {
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+  if (!conversationId) {
+    setMessages([]);   // 🔥 limpia chat al crear nueva
+  } else {
+    loadConversation();
+  }
+}, [conversationId]);
+
+  const loadConversation = async () => {
+    const res = await getConversation(conversationId);
+    console.log(res)
+    setMessages(res.data.messages || []);
+
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!input.trim()) return;
 
     const userMessage = {
       role: "user",
-      content: input,
+      content: input
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const res = await sendMessage(input);
+      const res = await sendMessage(input, conversationId);
 
-      const aiMessage = {
-        role: "assistant",
-        content: res.data.answer,
-      };
+      setMessages(prev => [
+        ...prev,
+        { role: "assistant", content: res.data.answer }
+      ]);
 
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      console.error(error);
+      if (!conversationId) {
+        setConversationId(res.data.conversation_id);
+      }
+
+    } catch (err) {
+      alert("Error al enviar mensaje");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
    <Layout>
-     <div className="flex flex-col h-[90vh] max-w-4xl mx-auto p-6">
-      <div className="flex-1 overflow-y-auto space-y-4">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`max-w-xl px-4 py-3 rounded-xl ${
-              msg.role === "user"
-                ? "bg-[var(--color-secondary)] ml-auto text-black"
-                : "bg-[var(--color-primary-light)]"
-            }`}
-          >
-            {msg.content}
-          </div>
-        ))}
+     <ChatLayout
+      conversationId={conversationId}
+      setConversationId={setConversationId}
+    >
+      <div className="flex flex-col h-full">
 
-        {loading && (
-          <div className="bg-gray-200 px-4 py-2 rounded-xl w-fit">
-            Pensando...
-          </div>
-        )}
+        {/* Header */}
+        <div className="p-4 border-b bg-white shadow-sm">
+          <h2 className="font-semibold text-gray-700">
+            Sistema de Asistencia Inteligente SICT
+          </h2>
+        </div>
 
-        <div ref={bottomRef}></div>
-      </div>
+        {/* Mensajes */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50">
 
-      <div className="mt-4 flex gap-3">
-        <input
-          type="text"
-          className="flex-1 border rounded-lg px-4 py-2 focus:outline-none"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Escribe tu mensaje..."
-        />
-        <button
-          onClick={handleSend}
-          className="bg-[var(--color-secondary)] hover:bg-[var(--color-secondary-light)] px-6 rounded-lg"
+          {messages.length === 0 && (
+            <div className="text-center text-gray-400 mt-10">
+              Inicia una conversación con la IA
+            </div>
+          )}
+
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                msg.role === "user"
+                  ? "justify-end"
+                  : "justify-start"
+              }`}
+            >
+              <div
+                className={`max-w-lg px-4 py-2 rounded-xl text-sm shadow 
+                  ${
+                    msg.role === "user"
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "bg-white text-gray-800"
+                  }`}
+              >
+                {msg.content}
+              </div>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="text-gray-400 text-sm">
+              La IA está escribiendo...
+            </div>
+          )}
+
+          <div ref={bottomRef} />
+        </div>
+
+        {/* Input */}
+        <form
+          onSubmit={handleSubmit}
+          className="p-4 bg-white border-t flex gap-3"
         >
-          Enviar
-        </button>
+          <input
+            type="text"
+            placeholder="Escribe tu consulta..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-[var(--color-secondary)] 
+                       hover:bg-[var(--color-secondary-light)] 
+                       text-black px-4 rounded-lg 
+                       transition flex items-center justify-center"
+          >
+            <FaPaperPlane />
+          </button>
+        </form>
+
       </div>
-    </div>
+    </ChatLayout>
    </Layout>
   );
 };

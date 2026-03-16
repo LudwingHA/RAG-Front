@@ -14,3 +14,8 @@
 div{
     background-image: linear-gradient();    
 }
+html{
+  margin: 0px;
+  border: none;
+  padding: 0;
+}

@@ -12,12 +12,13 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-export const sendMessage = (query) => {
-  return API.post("/chat", null, {
-    params: { query },
-  });
+export const sendMessage = (query, conversationId = null) => {
+  return API.post("/chat", { query, conversation_id: conversationId });
 };
 
 export const getHistory = () => {
   return API.get("/chat/history");
 };
+export const getConversations = () => API.get("/conversations");
+export const getConversation = (id) => API.get(`/conversations/${id}`);
+export const deleteConversation = (id) => API.delete(`/conversations/${id}`);
