@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Layout } from "../../layout/Layout";
 import { FaSignInAlt, FaEnvelope, FaLock, FaUserShield, FaArrowLeft } from "react-icons/fa";
-import { loginUser } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
 
 export const Login = () => {
@@ -27,12 +26,17 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
 
     try {
-      setLoading(true);
-      const data = await loginUser(form);
-      login(data.access_token, data.user);
-      navigate("/");
+
+      const result = await login(form.email, form.password);
+      
+      if (result.success) {
+        navigate("/");
+      } else {
+        setError(result.error);
+      }
     } catch (err) {
       setError(
         err.response?.data?.detail ||
@@ -56,12 +60,9 @@ export const Login = () => {
           </Link>
 
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E9ECEF]">
-
             <div className="h-2 bg-gradient-to-r from-[var(--color-primary)] to-[#C49A6C]"></div>
 
             <div className="p-8">
-
-
               <div className="text-center mb-8">
                 <div className="w-20 h-20 bg-gradient-to-br from-[var(--color-primary)] to-[#1E4F6E] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <FaUserShield className="text-4xl text-[#C49A6C]" />
@@ -73,7 +74,6 @@ export const Login = () => {
                   Secretaría de Infraestructura, Comunicaciones y Transportes
                 </p>
               </div>
-
 
               {error && (
                 <div className="mb-6 p-4 bg-[#DC3545]/10 border border-[#DC3545]/20 rounded-xl">
@@ -88,10 +88,7 @@ export const Login = () => {
                 </div>
               )}
 
-
               <form onSubmit={handleSubmit} className="space-y-5">
-
-
                 <div>
                   <label className="block text-sm font-medium text-[#495057] mb-2">
                     Correo Electrónico Institucional
@@ -114,7 +111,6 @@ export const Login = () => {
                     />
                   </div>
                 </div>
-
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
@@ -147,7 +143,6 @@ export const Login = () => {
                   </div>
                 </div>
 
-
                 <button
                   type="submit"
                   disabled={loading}
@@ -175,7 +170,6 @@ export const Login = () => {
                 </button>
               </form>
 
-
               <div className="mt-8 pt-6 border-t border-[#E9ECEF]">
                 <div className="flex items-center justify-center gap-2 text-sm text-[#6C757D]">
                   <FaUserShield className="text-[#C49A6C]" />
@@ -193,7 +187,6 @@ export const Login = () => {
               </div>
             </div>
           </div>
-
 
           <div className="mt-6 text-center">
             <p className="text-xs text-[#6C757D]">

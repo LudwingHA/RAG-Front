@@ -6,6 +6,7 @@ import { DectecPothole } from "../pages/baches/DectecPothole";
 import { HelpPage } from "../pages/help/HelpPage";
 import { ChatPage } from "../pages/chat/ChatPage";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { ProfilePage } from "../pages/profile/ProfilePage";
 
 export const router = createBrowserRouter([
   { path: '/', element: <Home></Home> },
@@ -14,6 +15,11 @@ export const router = createBrowserRouter([
   {
     path: '/baches', element: <ProtectedRoute>
       <DectecPothole></DectecPothole>
+    </ProtectedRoute>
+  },
+  {
+    path: '/profile', element: <ProtectedRoute>
+        <ProfilePage></ProfilePage>
     </ProtectedRoute>
   },
   {

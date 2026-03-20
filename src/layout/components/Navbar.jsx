@@ -66,6 +66,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-4">
             {isAuthenticated ? (
               <>
+                <Link to={"/profile"}>
                 <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-lg border border-white/10">
                   <FaUserCircle className="text-[#C49A6C] text-xl" />
                   <div className="flex flex-col">
@@ -74,7 +75,7 @@ export const Navbar = () => {
                     </span>
                     <span className="text-xs text-white/60">Usuario SICT</span>
                   </div>
-                </div>
+                </div></Link>
 
                 <button 
                   onClick={logout}
