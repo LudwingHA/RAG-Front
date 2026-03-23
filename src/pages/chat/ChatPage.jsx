@@ -11,7 +11,7 @@ export const ChatPage = () => {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
 
-  // Scroll automático
+
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({ 
       behavior: "smooth",
@@ -119,7 +119,7 @@ export const ChatPage = () => {
             </div>
           </div>
 
-          {/* Área de mensajes */}
+
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#F8F9FA]">
             {messages.length === 0 && !loading && (
               <div className="h-full flex flex-col items-center justify-center text-center">
@@ -133,7 +133,7 @@ export const ChatPage = () => {
                   Consulte información sobre personal, obras públicas, presupuestos y documentación institucional
                 </p>
                 
-                {/* Tarjetas de sugerencias */}
+
                 <div className="grid grid-cols-2 gap-3 max-w-lg">
                   {[
                     { text: "Personal activo", icon: "👥" },
@@ -162,7 +162,7 @@ export const ChatPage = () => {
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div className={`flex gap-3 max-w-3xl ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
-                  {/* Avatar */}
+
                   <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center shadow-sm
                     ${msg.role === "user" 
                       ? "bg-gradient-to-br from-[var(--color-primary)] to-[#1E4F6E]" 
@@ -174,7 +174,7 @@ export const ChatPage = () => {
                     }
                   </div>
 
-                  {/* Mensaje */}
+
                   <div
                     className={`px-5 py-4 rounded-2xl shadow-sm
                       ${msg.role === "user"
@@ -186,7 +186,7 @@ export const ChatPage = () => {
                       {formatMessage(msg.content)}
                     </div>
                     
-                    {/* Timestamp */}
+
                     <div className={`flex items-center gap-1 text-xs mt-2 
                       ${msg.role === "user" ? "text-white/70" : "text-[#6C757D]"}`}>
                       <FaRegClock />
@@ -217,7 +217,7 @@ export const ChatPage = () => {
             <div ref={bottomRef} />
           </div>
 
-          {/* Input mejorado - Estilo institucional */}
+
           <form
             onSubmit={handleSubmit}
             className="p-6 bg-white border-t border-[#E9ECEF] shadow-lg"
@@ -250,7 +250,7 @@ export const ChatPage = () => {
               </div>
             </div>
 
-            {/* Sugerencias rápidas */}
+
             {messages.length === 0 && (
               <div className="flex gap-2 mt-4 justify-center flex-wrap">
                 {[

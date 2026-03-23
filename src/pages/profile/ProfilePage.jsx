@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Layout } from '../../layout/Layout';
-import { 
-  FaUserCircle, 
-  FaEnvelope, 
-  FaBriefcase, 
-  FaIdCard, 
+import {
+  FaUserCircle,
+  FaEnvelope,
+  FaBriefcase,
+  FaIdCard,
   FaShieldAlt,
   FaEdit,
   FaSave,
@@ -27,11 +27,11 @@ export const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  
+
 
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  
+
 
   const [profileForm, setProfileForm] = useState({
     first_name: '',
@@ -155,7 +155,8 @@ export const ProfilePage = () => {
     try {
       await changePassword({
         current_password: passwordForm.current_password,
-        new_password: passwordForm.new_password
+        new_password: passwordForm.new_password,
+        confirm_password: passwordForm.confirm_password
       });
       setSuccess('Contraseña actualizada exitosamente');
       setIsChangingPassword(false);
@@ -165,7 +166,15 @@ export const ProfilePage = () => {
         confirm_password: ''
       });
     } catch (err) {
-      setError(err.response?.data?.detail || 'Error al cambiar la contraseña');
+      const detail = err.response?.data?.detail;
+
+      if (Array.isArray(detail)) {
+        setError(detail[0].msg);
+      } else if (typeof detail === "string") {
+        setError(detail);
+      } else {
+        setError("Error al cambiar la contraseña");
+      }
     } finally {
       setLoading(false);
     }
@@ -220,7 +229,7 @@ export const ProfilePage = () => {
     <Layout>
       <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-[#F8F9FA] to-[#E9ECEF] py-8 px-4">
         <div className="max-w-6xl mx-auto">
-          
+
 
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-[#212529] flex items-center gap-2">
@@ -251,7 +260,7 @@ export const ProfilePage = () => {
 
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
+
 
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E9ECEF] sticky top-4">
@@ -262,13 +271,13 @@ export const ProfilePage = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="pt-16 p-6 text-center">
                   <h2 className="text-xl font-bold text-[#212529]">
                     {user.first_name} {user.last_name}
                   </h2>
                   <p className="text-[#C49A6C] font-medium mt-1">{user.cargo}</p>
-                  
+
                   <div className="mt-4 pt-4 border-t border-[#E9ECEF]">
                     <div className="flex items-center justify-center gap-2 text-sm text-[#6C757D] mb-2">
                       <FaShieldAlt className="text-[#C49A6C]" />
@@ -310,7 +319,7 @@ export const ProfilePage = () => {
 
 
             <div className="lg:col-span-2 space-y-6">
-              
+
 
               {isEditing ? (
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E9ECEF]">
@@ -320,10 +329,10 @@ export const ProfilePage = () => {
                       Editar Información Personal
                     </h3>
                   </div>
-                  
+
                   <form onSubmit={handleProfileSubmit} className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      
+
                       <div>
                         <label className="block text-sm font-medium text-[#495057] mb-2">
                           Nombre *
@@ -526,7 +535,7 @@ export const ProfilePage = () => {
                   </form>
                 </div>
               ) : isChangingPassword ? (
-                /* Cambiar Contraseña */
+
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E9ECEF]">
                   <div className="p-6 border-b border-[#E9ECEF] bg-gradient-to-r from-[#F8F9FA] to-white">
                     <h3 className="text-lg font-semibold text-[#212529] flex items-center gap-2">
@@ -537,7 +546,7 @@ export const ProfilePage = () => {
                       Por seguridad, elige una contraseña robusta
                     </p>
                   </div>
-                  
+
                   <form onSubmit={handlePasswordSubmit} className="p-6">
                     <div className="space-y-4">
                       <div>
@@ -578,15 +587,14 @@ export const ProfilePage = () => {
                           value={passwordForm.confirm_password}
                           onChange={handlePasswordChange}
                           required
-                          className={`w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-[#C49A6C] focus:border-transparent transition-all ${
-                            passwordForm.confirm_password && passwordForm.new_password !== passwordForm.confirm_password
+                          className={`w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-[#C49A6C] focus:border-transparent transition-all ${passwordForm.confirm_password && passwordForm.new_password !== passwordForm.confirm_password
                               ? 'border-[#DC3545]'
                               : 'border-[#E9ECEF]'
-                          }`}
+                            }`}
                         />
                       </div>
 
-                      {/* Requisitos de contraseña */}
+
                       {passwordForm.new_password && (
                         <div className="bg-[#F8F9FA] rounded-xl p-4">
                           <p className="text-sm font-medium text-[#495057] mb-3">Requisitos de seguridad:</p>
@@ -643,10 +651,10 @@ export const ProfilePage = () => {
                       Información Personal
                     </h3>
                   </div>
-                  
+
                   <div className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      
+
                       <div className="space-y-4">
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
@@ -655,7 +663,7 @@ export const ProfilePage = () => {
                           </p>
                           <p className="text-[#212529] font-medium mt-1">{user.first_name} {user.last_name}</p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaBriefcase className="text-[#C49A6C]" />
@@ -663,7 +671,7 @@ export const ProfilePage = () => {
                           </p>
                           <p className="text-[#212529] font-medium mt-1">{user.cargo || 'No especificado'}</p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaBuilding className="text-[#C49A6C]" />
@@ -671,7 +679,7 @@ export const ProfilePage = () => {
                           </p>
                           <p className="text-[#212529] font-medium mt-1">{user.department || 'No especificado'}</p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaDesktop className="text-[#C49A6C]" />
@@ -679,7 +687,7 @@ export const ProfilePage = () => {
                           </p>
                           <p className="text-[#212529] font-medium mt-1">{user.area || 'No especificado'}</p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaIdCard className="text-[#C49A6C]" />
@@ -688,7 +696,7 @@ export const ProfilePage = () => {
                           <p className="text-[#212529] font-medium mt-1">{user.employee_id || 'No especificado'}</p>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-4">
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
@@ -697,7 +705,7 @@ export const ProfilePage = () => {
                           </p>
                           <p className="text-[#212529] font-medium mt-1 break-all">{user.email}</p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaPhone className="text-[#C49A6C]" />
@@ -708,7 +716,7 @@ export const ProfilePage = () => {
                             {user.extension && ` (Ext. ${user.extension})`}
                           </p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaBuilding className="text-[#C49A6C]" />
@@ -716,7 +724,7 @@ export const ProfilePage = () => {
                           </p>
                           <p className="text-[#212529] font-medium mt-1">{user.office || 'No especificado'}</p>
                         </div>
-                        
+
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">
                             <FaUserTie className="text-[#C49A6C]" />
@@ -725,7 +733,7 @@ export const ProfilePage = () => {
                           <p className="text-[#212529] font-medium mt-1">{user.supervisor || 'No especificado'}</p>
                         </div>
                       </div>
-                      
+
                       <div className="md:col-span-2">
                         <div className="bg-[#F8F9FA] p-3 rounded-xl">
                           <p className="text-xs text-[#6C757D] uppercase tracking-wider flex items-center gap-1">

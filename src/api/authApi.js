@@ -41,6 +41,7 @@ export const updateProfile = async (profileData) => {
 };
 
 export const changePassword = async (passwordData) => {
+  console.log(passwordData)
   try {
     const response = await api.post('/profile/change-password', passwordData);
     return response.data;
