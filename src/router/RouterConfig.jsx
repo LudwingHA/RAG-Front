@@ -2,11 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import { Home } from "../pages/home/Home";
 import { Register } from "../auth/pages/Register";
 import { Login } from "../auth/pages/Login";
-import { DectecPothole } from "../pages/baches/DectecPothole";
 import { HelpPage } from "../pages/help/HelpPage";
 import { ChatPage } from "../pages/chat/ChatPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ProfilePage } from "../pages/profile/ProfilePage";
+import { BachesPage } from "../pages/baches/DectecPothole";
 
 export const router = createBrowserRouter([
   { path: '/', element: <Home></Home> },
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
   { path: '/login', element: <Login></Login> },
   {
     path: '/baches', element: <ProtectedRoute>
-      <DectecPothole></DectecPothole>
+      <BachesPage></BachesPage>
     </ProtectedRoute>
   },
   {

@@ -67,7 +67,7 @@ export const Navbar = () => {
             {isAuthenticated ? (
               <>
                 <Link to={"/profile"}>
-                <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-lg border border-white/10 hover:text-[#C49A6C] hover:bg-white/10 transition-all duration-300  ">
                   <FaUserCircle className="text-[#C49A6C] text-xl" />
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">

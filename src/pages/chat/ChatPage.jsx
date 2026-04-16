@@ -104,7 +104,7 @@ export const ChatPage = () => {
           {/* Header institucional */}
           <div className="px-6 py-4 border-b border-[#E9ECEF] bg-white shadow-sm">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[#1E4F6E] flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)] flex items-center justify-center shadow-md">
                 <FaRobot className="text-white text-xl" />
               </div>
               <div>
@@ -123,7 +123,7 @@ export const ChatPage = () => {
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#F8F9FA]">
             {messages.length === 0 && !loading && (
               <div className="h-full flex flex-col items-center justify-center text-center">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[#1E4F6E] flex items-center justify-center mb-6 shadow-lg">
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)] flex items-center justify-center mb-6 shadow-lg">
                   <FaComments className="text-4xl text-[#C49A6C]" />
                 </div>
                 <h3 className="text-xl font-semibold text-[#212529] mb-3">
@@ -165,7 +165,7 @@ export const ChatPage = () => {
 
                   <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center shadow-sm
                     ${msg.role === "user" 
-                      ? "bg-gradient-to-br from-[var(--color-primary)] to-[#1E4F6E]" 
+                      ? "bg-gradient-to-br from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)]" 
                       : "bg-gradient-to-br from-[#C49A6C] to-[#A57C52]"}`}
                   >
                     {msg.role === "user" 
@@ -178,7 +178,7 @@ export const ChatPage = () => {
                   <div
                     className={`px-5 py-4 rounded-2xl shadow-sm
                       ${msg.role === "user"
-                        ? "bg-gradient-to-r from-[var(--color-primary)] to-[#1E4F6E] text-white rounded-tr-none"
+                        ? "bg-gradient-to-r from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)] text-white rounded-tr-none"
                         : "bg-white border border-[#E9ECEF] text-[#212529] rounded-tl-none"
                       }`}
                   >
@@ -238,7 +238,7 @@ export const ChatPage = () => {
                     type="submit"
                     disabled={loading}
                     className="absolute right-2 top-1/2 -translate-y-1/2
-                             bg-gradient-to-r from-[var(--color-primary)] to-[#1E4F6E]
+                             bg-gradient-to-r from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)]
                              hover:from-[#1E4F6E] hover:to-[#0B3B5C]
                              text-white p-3 rounded-xl transition-all
                              disabled:opacity-50 disabled:cursor-not-allowed

@@ -109,7 +109,7 @@ export const ChatLayout = ({ children, conversationId, setConversationId }) => {
         {/* Header Sidebar */}
         <div className="p-5 border-b border-[#E9ECEF] bg-gradient-to-r from-[#F8F9FA] to-white">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[#1E4F6E] flex items-center justify-center shadow-md">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)] flex items-center justify-center shadow-md">
               <FaArchive className="text-white text-lg" />
             </div>
             <div>
@@ -124,7 +124,7 @@ export const ChatLayout = ({ children, conversationId, setConversationId }) => {
           <button
             onClick={() => setConversationId(null)}
             className="w-full flex items-center justify-center gap-2 
-                       bg-[var(--color-primary)] hover:bg-[#1E4F6E] 
+                       bg-[var(--color-primary-chat)] hover:bg-[var(--color-secondary-chat)] 
                        text-white py-3 rounded-xl 
                        transition-all duration-300 font-medium
                        shadow-md hover:shadow-lg"
@@ -184,7 +184,7 @@ export const ChatLayout = ({ children, conversationId, setConversationId }) => {
                                 rounded-xl cursor-pointer 
                                 transition-all duration-200
                                 ${isActive 
-                                  ? "bg-gradient-to-r from-[var(--color-primary)] to-[#1E4F6E] shadow-md text-white" 
+                                  ? "bg-gradient-to-r from-[var(--color-primary-chat)] to-[var(--color-secondary-chat)] shadow-md text-white" 
                                   : "bg-[#F8F9FA] hover:bg-white border border-[#E9ECEF] hover:shadow-md"}`}
                   >
                     <div

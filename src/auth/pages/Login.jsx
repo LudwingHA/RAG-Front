@@ -147,11 +147,11 @@ export const Login = () => {
                   type="submit"
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-[var(--color-primary)] to-[#1E4F6E] 
-                           hover:from-[#1E4F6E] hover:to-[#0B3B5C]
+                           hover:from-[#C49A6C] hover:to-[#7f5d38]
                            text-white py-3.5 rounded-xl font-medium 
                            transition-all duration-300 disabled:opacity-60
                            shadow-md hover:shadow-lg transform hover:-translate-y-0.5
-                           flex items-center justify-center gap-2"
+                           flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {loading ? (
                     <>
