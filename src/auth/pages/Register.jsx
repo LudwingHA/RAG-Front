@@ -184,7 +184,7 @@ export const Register = () => {
                                focus:outline-none focus:ring-2 focus:ring-[#C49A6C] focus:border-transparent
                                bg-[#F8F9FA] text-[#212529] placeholder-[#ADB5BD]
                                transition-all"
-                      placeholder="Pérez González"
+                      placeholder="Campos"
                     />
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export const Register = () => {
                                focus:outline-none focus:ring-2 focus:ring-[#C49A6C] focus:border-transparent
                                bg-[#F8F9FA] text-[#212529] placeholder-[#ADB5BD]
                                transition-all"
-                      placeholder="juan.perez@sict.gob.mx"
+                      placeholder="carlos.campos@sict.gob.mx"
                     />
                   </div>
                   <p className="text-xs text-[#6C757D] mt-1">
